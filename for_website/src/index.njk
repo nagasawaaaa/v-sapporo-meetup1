@@ -1,0 +1,45 @@
+{% extends root + vars.include_path.root + '/_default.njk' %}
+{% block page_title %}Page Title Example{% endblock %}
+{% block page_description %}Page Description Example{% endblock %}
+{% block page_keywords %}Page Keyword Example{% endblock %}
+
+{% block header -%}{%- endblock %}
+{% block navigation -%}{%- endblock %}
+{% block footer -%}{%- endblock %}
+
+{% block contents -%}
+  <main id="app" class="ly_body">
+    <p><input v-validate="'required|email'" data-vv-as="メールアドレス" name="email" type="text"></p>
+    <p>${ errors.first('email') }</p>
+  </main>
+  <!-- /#app -->
+{%- endblock %}
+
+{% block js_library %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/vee-validate/2.2.2/vee-validate.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/vee-validate/2.2.2/locale/ja.js"></script>
+<script>
+  // VeeValidate を有効化
+  Vue.use(VeeValidate);
+
+  // 日本語化
+  const dictionary = VeeValidate.Validator.dictionary.container.ja.messages;
+  VeeValidate.Validator.localize('ja', dictionary);
+
+  // エラーメッセージの上書き
+  const customErrorMessages = {
+    ja: {
+      messages: {
+        email: (value) => value + 'を上書きしたエラーメッセージ'
+      }
+    }
+  };
+  VeeValidate.Validator.localize(customErrorMessages);
+
+  const vm = new Vue({
+    el: '#app',
+    delimiters: ['${','}']
+  });
+</script>
+{% endblock %}
