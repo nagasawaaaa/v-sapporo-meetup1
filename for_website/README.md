@@ -7,7 +7,7 @@ or
 yarn install
 ```
 
-### git prunedevelopment
+### development
 ```
 npm start
 or 
