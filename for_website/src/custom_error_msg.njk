@@ -51,6 +51,16 @@
   // 日本語化
   VeeValidate.Validator.localize('ja');
 
+  // エラーメッセージの上書き
+  const customErrorMessages = {
+    ja: {
+      messages: {
+        email: (value) => value + 'を上書きしたエラーメッセージ'
+      }
+    }
+  };
+  VeeValidate.Validator.localize(customErrorMessages);
+
   const vm = new Vue({
     el: '#app',
     delimiters: ['${','}'],
