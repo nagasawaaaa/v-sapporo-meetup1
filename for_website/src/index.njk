@@ -1,7 +1,5 @@
 {% extends root + vars.include_path.root + '/_default.njk' %}
-{% block page_title %}VeeValidate DEMO For Web Site{% endblock %}
-{% block page_description %}Page Description Example{% endblock %}
-{% block page_keywords %}Page Keyword Example{% endblock %}
+{% block page_title %}DEMO1:VeeValidate DEMO For Web Site{% endblock %}
 
 {% block header -%}{%- endblock %}
 {% block navigation -%}{%- endblock %}
@@ -14,30 +12,12 @@
       <input
           id="mail"
           v-validate="'required|email'"
-          data-vv-as="メールアドレス"
           name="email"
           type="text"
           placeholder="メールアドレスを入力"
       >
     </p>
     <p v-if="errors.first('email')">${ errors.first('email') }</p>
-    <p>
-      <label for="tel">電話番号</label>
-      <input
-          id="tel"
-          v-validate="'required|tel'"
-          data-vv-as="電話番号"
-          name="tel"
-          type="text"
-          placeholder="電話番号を入力"
-      >
-    </p>
-    <p v-if="errors.first('tel')">${ errors.first('tel') }</p>
-    <p>
-      <label for="min_price">最低時給</label>
-      <input id="min_price" v-validate="'required|numeric|min_value:650'" data-vv-as="最低時給" name="min_price" type="text" placeholder="最低時給">円
-    </p>
-    <p v-if="errors.first('min_price')">${ errors.first('min_price') }</p>
   </main>
   <!-- /#app -->
 {%- endblock %}
@@ -45,48 +25,13 @@
 {% block js_library %}
 <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/vee-validate/2.2.2/vee-validate.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/vee-validate/2.2.2/locale/ja.js"></script>
 <script>
   // VeeValidate を有効化
   Vue.use(VeeValidate);
 
-  // 日本語化
-  const dictionary = VeeValidate.Validator.dictionary.container.ja.messages;
-  VeeValidate.Validator.localize('ja', dictionary);
-
-  // エラーメッセージの上書き
-  const customErrorMessages = {
-    ja: {
-      messages: {
-        email: (value) => value + 'を上書きしたエラーメッセージ'
-      }
-    }
-  };
-  VeeValidate.Validator.localize(customErrorMessages);
-
   const vm = new Vue({
     el: '#app',
-    delimiters: ['${','}'],
-    methods: {
-      addValidatorTel () {
-        this.$validator.extend('tel', {
-          getMessage: (value) => value + 'の形式をご確認ください',
-          validate: (value) => {
-            // ハイフン的な文字列は削除
-            let valNum = value.replace(/[ー|−|‐|-]/gu, '');
-
-            if (!/^\d{10,11}$/.test(valNum)) {
-              return false
-            }
-            return true
-          }
-        });
-      }
-    },
-    created () {
-      // バリデーションの追加
-      this.addValidatorTel();
-    }
+    delimiters: ['${','}']
   });
 </script>
 {% endblock %}
